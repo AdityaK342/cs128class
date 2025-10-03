@@ -74,3 +74,31 @@ TEST_CASE("Example: Print Prompt Ledger", "[ex-3]") {
   atm.PrintLedger("./prompt.txt", 12345678, 1234);
   REQUIRE(CompareFiles("./ex-1.txt", "./prompt.txt"));
 }
+
+
+
+TEST_CASE("Example: Register Account Exceptions", "[ex-4]") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+  REQUIRE_THROWS_AS(atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30),
+                    std::invalid_argument);
+}
+
+TEST_CASE("Example: Withdraw Cash Exceptions", "[ex-5]") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+  REQUIRE_THROWS_AS(atm.WithdrawCash(12345678, 4321, 20), std::invalid_argument);
+}
+
+TEST_CASE("Example: Deposit Cash Exceptions", "[ex-6]") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+  REQUIRE_THROWS_AS(atm.DepositCash(12345678, 4321, 20), std::invalid_argument);
+}
+
+TEST_CASE("Example: Print-Ledger Exceptions", "[ex-7]") {
+  Atm atm;
+  atm.RegisterAccount(12345678, 1234, "Sam Sepiol", 300.30);
+  REQUIRE_THROWS_AS(atm.PrintLedger("./prompt.txt", 12345678, 4321),
+                    std::invalid_argument);
+}
